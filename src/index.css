@@ -30,13 +30,26 @@ code {
   font-weight: bold;
 }
 
+.App_top {
+  text-align: center;
+}
 .App_modal_form {
-  width: 500px;
-  height: 300px;
-  background: #daeed3;
+  width: 840px;
+  height: 400px;
+  background-image: url(https://lidkon.by/wp-content/uploads/2022/09/t20x7357-1.png);
   position: fixed;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-blend-mode: multiply;
+  background-color: #00000059;
+}
 
+.App_modal_top h2 {
+  color: white;
+  font-weight: bold;
 }
 
 .App_modal {
@@ -44,4 +57,43 @@ code {
   align-items: center;
   flex-direction: column-reverse;
 
+}
+
+.App_modal_top {
+  text-align: center;
+}
+
+.App_Modal_TimeBlocks>div {
+  height: 100px;
+  width: 100px;
+  background: #006865;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.App_Modal_TimeBlocks {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding-top: 30px;
+}
+
+span.App_modal_time {
+  color: white;
+  font-weight: bold;
+}
+
+span.App_modal_tickets {
+  background: white;
+  color: black;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 30px;
 }

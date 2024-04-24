@@ -2,11 +2,11 @@
   display: grid;
   grid-template-columns: 120px 120px 120px 120px 120px 120px 120px;
   justify-content: center;
-  padding-top: 50px;
+ 
   gap:15px;
 }
 .App_calendar_month>div {
-  border: solid 1px black;
+  border: solid 1px ;
   height: 80px;
   display: flex;
   justify-content: space-around;
