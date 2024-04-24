@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.App_calendar_button {
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.App_calendar_button button {
+  background: #005d58;
+  border: none;
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+  font-size: 11px;
+  color: white;
+  font-weight: bold;
+}
+
+.App_modal_form {
+  width: 500px;
+  height: 300px;
+  background: #daeed3;
+  position: fixed;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+}
+
+.App_modal {
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+
+}
