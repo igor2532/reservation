@@ -1,6 +1,7 @@
 {
   "homepage": "https://igor2532.github.io/reservation",
   "version": "0.1.0",
+  "name": "reservation",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
