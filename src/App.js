@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 
 function App() {
@@ -26,9 +26,19 @@ function App() {
     {title:29,dayOfWeek:'Вс',isWeekend:true},
     {title:30,dayOfWeek:'Пн',isWeekend:false},
   ]
+
+
+  fetch('https://myapi-5b0f.onrender.com/')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
   return (
     <div className="App">
      
+
+
+
    
       <div className='App_calendar_month'>
      
