@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { setArrayValue, setDateCurrent, setIsModal } from './features/reservation/reservationSlice';
+import { setArrayTickets, setArrayValue, setDateCurrent, setIsModal } from './features/reservation/reservationSlice';
 import Modal from './components/Modal';
 
 function App() {
   const dispatch = useDispatch()
-const {arrayValue,monthValue,isModal,dateCurrent} = useSelector((state)=>state.reservation)
+const {arrayValue,monthValue,isModal,dateCurrent,arrayTickets} = useSelector((state)=>state.reservation)
  
 
 
@@ -18,13 +18,21 @@ const {arrayValue,monthValue,isModal,dateCurrent} = useSelector((state)=>state.r
   const res = await fetch('http://localhost:3001/',{ referrer:'unsafe-url'})
     .then(response => response.json())
     .then(data =>  dispatch(setArrayValue(Object.values(data))))
+    .catch(error => console.error(error)) 
+}
+
+async function getPostsForAdmin() {
+  const res = await fetch('http://localhost:3001/tickets',{ referrer:'unsafe-url'})
+    .then(response => response.json())
+    .then(data =>  dispatch(setArrayTickets(Object.values(data))))
     .catch(error => console.error(error))
   
 }
 
 useEffect(() => {
   getPosts();
-}, [arrayValue,monthValue]);
+  getPostsForAdmin();
+}, [arrayValue,monthValue,arrayTickets]);
 
 const getWeekDay = (week) => {
   switch (parseInt(week)) {
@@ -66,6 +74,22 @@ const getStyleWeek = (week) => {
 }
 
 
+const deleteTicket = (item) => {
+
+  fetch(`http://localhost:3001/deleteTicket`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({idTicket : item.id}),
+  })
+
+
+}
+
+
+
   return (
 <>
 
@@ -74,23 +98,19 @@ const getStyleWeek = (week) => {
     <h1>{monthValue}</h1>
 </div>
       <div  className='App_calendar_month'>
-     {
-      
-      
-     }
     {arrayValue.length>0 &&
     arrayValue.map( (item,key) => (
-      <div key={key} style={{background:item.countsFreeTickets==0?'#f8c3c3':'#cdf1cd',borderColor:item.countsFreeTickets==0?'white':'#005d58'}}>
+      <div key={key} style={{background:item.countsFreeTickets==0 || item.isCloseReserv==1?'#f8c3c3':'#cdf1cd',borderColor:item.countsFreeTickets==0?'white':'#005d58'}}>
         <div style={{color:getStyleWeek(item.week)}} className='App_calendar_dayOf'>{getWeekDay(item.week)}</div>
        <div className='App_calendar_day'>{
        parseInt( item.day)
        }</div> 
-       <div className='App_calendar_button'><button disabled={item.countsFreeTickets==0}  onClick={()=>{
+       <div className='App_calendar_button'><button disabled={item.countsFreeTickets==0|| item.isCloseReserv==1}  onClick={()=>{
         dispatch(setIsModal(!isModal))
         dispatch(setDateCurrent(item.dmw))
         console.log(item.dmw)
        }
-        } style={{display:item.countsFreeTickets==0?'none':''}}>({item.countsFreeTickets})</button></div>
+        } style={{display:item.countsFreeTickets==0|| item.isCloseReserv==1?'none':''}}>({item.countsFreeTickets})</button></div>
       </div>
     ))}
 
@@ -101,6 +121,21 @@ const getStyleWeek = (week) => {
 
 
     </div>
+
+   <div className='App_admin_panel'>
+    <h2>Тут админка</h2>
+    <div>
+      {
+        arrayTickets.map((item,key)=>(
+          <div key={key}>
+           {item.email}   {item.name}   {item.phone}  {item.date} {item.id}  <button onClick={()=>deleteTicket(item)}>X</button>
+          </div>
+        ))
+      }
+    </div>
+   </div>
+
+
       {isModal &&
         <Modal />
         }

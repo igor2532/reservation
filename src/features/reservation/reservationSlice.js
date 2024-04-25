@@ -18,8 +18,9 @@ export const reservationSlice = createSlice({
     isActiveTicketTiem: 0,
     //for insert
     
-    valueDateReservation: ''
-
+    valueDateReservation: '',
+  //for admin
+     arrayTickets : []
   },
   reducers: {
    
@@ -56,6 +57,9 @@ export const reservationSlice = createSlice({
       },
       setIsActiveTicketTiem: (state,action) => {
         state.isActiveTicketTiem = action.payload
+      },
+      setArrayTickets: (state,action) => {
+        state.arrayTickets = action.payload
       }
       
   
@@ -64,6 +68,6 @@ export const reservationSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent,setValueName,
-setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem } = reservationSlice.actions
+setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem ,setArrayTickets} = reservationSlice.actions
 
 export default reservationSlice.reducer

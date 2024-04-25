@@ -34,6 +34,7 @@ code {
   text-align: center;
 }
 .App_modal_form {
+  top:100px;
   width: 840px;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -47,7 +48,14 @@ code {
   justify-content: center;
   background-blend-mode: multiply;
   background-color: #00000059;
+
+
+  
 }
+
+
+
+
 
 .App_modal_top h2 {
   color: white;
@@ -128,4 +136,18 @@ span.App_modal_tickets {
   color: white;
   font-weight: bold;
   border-radius: 15px;
+}
+
+
+
+@keyframes color-change {
+  from {
+    background-color: #F498AD;
+  }
+  50% {
+    background-color: #7F6EDB;
+  }
+  to {
+    background-color: #2E9AFF;
+  }
 }
