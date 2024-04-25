@@ -9,7 +9,17 @@ export const reservationSlice = createSlice({
     monthValue: 'Апрель',
     isModal: false,
     arrayInDayValue: [],
-    dateCurrent: ''
+    dateCurrent: '',
+//forms inputs
+    valueName:'',
+    valuePhone: '',
+    valueEmail: '',
+    countTickets: 0,
+    isActiveTicketTiem: 0,
+    //for insert
+    
+    valueDateReservation: ''
+
   },
   reducers: {
    
@@ -27,12 +37,33 @@ export const reservationSlice = createSlice({
       },
       setDateCurrent: (state,action) =>{
         state.dateCurrent = action.payload;
+      },
+      //inputs
+      setValueName: (state,action) => {
+      state.valueName = action.payload
+      },
+      setValueEmail: (state,action) => {
+        state.valueEmail = action.payload
+      },
+      setValuePhone: (state,action) => {
+        state.valuePhone = action.payload
+      },
+      setCountTickets: (state,action) => {
+        state.countTickets = action.payload
+      },
+      setValueDateReservation: (state,action) => {
+        state.valueDateReservation = action.payload
+      },
+      setIsActiveTicketTiem: (state,action) => {
+        state.isActiveTicketTiem = action.payload
       }
+      
   
   }
 })
 
 // Action creators are generated for each case reducer function
-export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent } = reservationSlice.actions
+export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent,setValueName,
+setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem } = reservationSlice.actions
 
 export default reservationSlice.reducer

@@ -35,7 +35,9 @@ code {
 }
 .App_modal_form {
   width: 840px;
-  height: 400px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  height:auto;
   background-image: url(https://lidkon.by/wp-content/uploads/2022/09/t20x7357-1.png);
   position: fixed;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -96,4 +98,34 @@ span.App_modal_tickets {
   justify-content: center;
   font-weight: bold;
   border-radius: 30px;
+}
+
+.App_modal_middle input, select {
+  height: 35px;
+  width: 263px;
+}
+
+.App_modal_middle>div {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 30px;
+  padding-top: 23px;
+}
+
+.App_modal_middle>div {
+  display: flex;
+  gap: 30px;
+  padding-top: 23px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.App_modal_form_btn button {
+  height: 40px;
+  width: 160px;
+  background: #006865;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 15px;
 }

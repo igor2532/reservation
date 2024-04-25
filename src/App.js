@@ -2,9 +2,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
-import Modal from './Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setArrayValue, setDateCurrent, setIsModal } from './features/reservation/reservationSlice';
+import Modal from './components/Modal';
 
 function App() {
   const dispatch = useDispatch()
@@ -88,6 +88,7 @@ const getStyleWeek = (week) => {
        <div className='App_calendar_button'><button disabled={item.countsFreeTickets==0}  onClick={()=>{
         dispatch(setIsModal(!isModal))
         dispatch(setDateCurrent(item.dmw))
+        console.log(item.dmw)
        }
         } style={{display:item.countsFreeTickets==0?'none':''}}>({item.countsFreeTickets})</button></div>
       </div>
