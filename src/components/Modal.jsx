@@ -8,7 +8,7 @@ export default function Modal() {
 const dispatch = useDispatch()
 const {arrayInDayValue,dateCurrent,isActiveTicketTiem} = useSelector((state)=>state.reservation)
   async function getTimes() {
-   const res =  await fetch(`https://myapi-5b0f.onrender.com/dates/${dateCurrent}`,{ referrer:'unsafe-url'})
+   const res =  await fetch(`http://localhost:3001/dates/${dateCurrent}`,{ referrer:'unsafe-url'})
       .then(response => response.json())
       .then(data =>  dispatch(setArrayInDay(Object.values(data))))
       .catch(error => console.error(error))
