@@ -54,7 +54,9 @@ code {
 }
 
 
-
+.App_admin_panel {
+  text-align: center;
+}
 
 
 .App_modal_top h2 {
@@ -68,7 +70,11 @@ code {
   flex-direction: column-reverse;
 
 }
-
+.App_modal_form_middle select {
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .App_modal_top {
   text-align: center;
 }

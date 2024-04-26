@@ -24,3 +24,8 @@
 .App_calendar_dayOf {
   font-weight: bold;
 }
+
+.App_modal_form_middle label {
+  color: white;
+  font-weight: bold;
+}
