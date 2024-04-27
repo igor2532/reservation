@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { act } from 'react-dom/test-utils';
 
 export const reservationSlice = createSlice({
   name: 'reservation',
   initialState: {
+    isLoaded:false,
+    isLoadedDays: false,
+    localUrl: 'https://myapi-5b0f.onrender.com',
+    // localUrl: 'http://localhost:3001',
     value: 0,
     sumResult:0,
     arrayValue: '',
@@ -64,6 +69,12 @@ export const reservationSlice = createSlice({
       },
       setIsValideForm: (state,action) => {
         state.isValideForm = action.payload
+      },
+      setIsLoaded: (state,action) => {
+        state.isLoaded = action.payload
+      },
+      setIsLoadedDays: (state,action) => {
+        state.isLoadedDays = action.payload
       }
   
   }
@@ -71,6 +82,7 @@ export const reservationSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent,setValueName,
-setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem ,setArrayTickets,setIsValideForm} = reservationSlice.actions
+setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem ,setArrayTickets,setIsValideForm,setIsLoaded,
+setIsLoadedDays} = reservationSlice.actions
 
 export default reservationSlice.reducer

@@ -11,8 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+span.blackSpinner {
+  border-bottom-color: black;
+}
+div.App_loading {
+  text-align: center;
+  padding-top: 30px;
+padding-bottom: 30px;
+}
+.App_update button {
+  height: 50px;
+  width: 219px;
+  background: white;
+  border-radius: 16px;
+  font-size: 17px;
+  font-weight: bold;
+}
 
-
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  }
+  .App_update {
+    padding-top: 30px;
+}
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 
 .App_calendar_button {
   margin: 0 auto;
   width: 100%;

@@ -4,10 +4,9 @@ import { setCountTickets, setIsActiveTicketTiem, setIsModal, setIsValideForm, se
 
 export default function ModalForm() {
    const dispatch = useDispatch()
-   const {valueEmail, valueName, valuePhone, countTickets,valueDateReservation,isActiveTicketTiem,isModal,isValideForm} = useSelector((state)=> state.reservation)
+   const {valueEmail, valueName, valuePhone, countTickets,valueDateReservation,isActiveTicketTiem,isModal,isValideForm,localUrl} = useSelector((state)=> state.reservation)
     const sendQuery = () => {
-     
-        fetch(`https://myapi-5b0f.onrender.com/insert`, {
+        fetch(`${localUrl}/insert`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -18,18 +17,11 @@ export default function ModalForm() {
      dispatch(setIsModal(false))
     }
     useEffect(()=>{
-
         if(valueEmail != '' && valueName != '' &&  valuePhone != '' && isActiveTicketTiem !== 0 ){
           dispatch(setIsValideForm(true))
-       
-          console.log(1)
-          console.log(valueEmail != '' && valueName != '' &&  valuePhone != '')
         }
         else{
           dispatch(setIsValideForm(false))
-        
-          console.log(2)
-          console.log(valueEmail != '' && valueName != '' &&  valuePhone != '')
         }
 
     

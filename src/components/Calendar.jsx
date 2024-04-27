@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {setArrayValue, setCountTickets, setDateCurrent, setIsActiveTicketTiem, setIsModal, setIsValideForm, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
+import {setArrayValue, setCountTickets, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsLoadedDays, setIsModal, setIsValideForm, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
 import Modal from '../components/Modal.jsx'
 
 
 export default function Calendar() {
     const dispatch = useDispatch()
-    const {arrayValue,monthValue,isModal,dateCurrent} = useSelector((state)=>state.reservation)
+    const {arrayValue,monthValue,isModal,dateCurrent,localUrl,isLoadedDays} = useSelector((state)=>state.reservation)
      
      async function getPosts() {
-      const res = await fetch('https://myapi-5b0f.onrender.com/',{ referrer:'unsafe-url'})
+      const res = await fetch(`${localUrl}/`,{ referrer:'unsafe-url'})
         .then(response => response.json())
-        .then(data =>  dispatch(setArrayValue(Object.values(data))))
-        .catch(error => console.error(error)) 
+        .then(data =>{
+          dispatch(setArrayValue(Object.values(data)))
+          dispatch(setIsLoadedDays(true))
+         }).catch(error => console.error(error)) 
     }
-    
-    
     
     useEffect(() => {
       getPosts();
@@ -63,8 +63,20 @@ export default function Calendar() {
     
   return (
     <>
+
+
+    {
+      isLoadedDays &&
+
+
 <div onClick={()=>isModal?dispatch(setIsModal(false)):''} className="App" style={{filter:isModal?'blur(4px)':'unset'}}>
      <div className='App_top'>
+     <div className='App_update'><button onClick={
+      ()=>{
+        dispatch(setIsLoadedDays(false))
+        getPosts()
+      }
+     }>Обновить календарь</button></div>
     <h1>{monthValue}</h1>
 </div>
       <div  className='App_calendar_month'>
@@ -78,7 +90,7 @@ export default function Calendar() {
        <div className='App_calendar_button'><button disabled={item.countsFreeTickets==0|| item.isCloseReserv==1}  onClick={()=>{
         dispatch(setIsModal(!isModal))
         dispatch(setDateCurrent(item.dmw))
-
+        dispatch(setIsLoaded(false))
         dispatch(setIsActiveTicketTiem(0))
         dispatch(setIsValideForm(false))
         dispatch(setValueEmail(''))
@@ -93,7 +105,11 @@ export default function Calendar() {
 
      </div>
     </div>
+      }
 
+     {!isLoadedDays &&
+ <div className='App_loading'><span class="loader blackSpinner"></span></div>
+}   
      { isModal &&
       <Modal />
        }

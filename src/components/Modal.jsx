@@ -1,21 +1,26 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setArrayInDay, setDateCurrent, setIsActiveTicketTiem, setIsModal, setValueDateReservation } from '../features/reservation/reservationSlice';
+import { setArrayInDay, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsModal, setValueDateReservation } from '../features/reservation/reservationSlice';
 import ModalForm from './ModalForm';
 
 export default function Modal() {
 
 const dispatch = useDispatch()
-const {arrayInDayValue,dateCurrent,isActiveTicketTiem} = useSelector((state)=>state.reservation)
+const {arrayInDayValue,dateCurrent,isActiveTicketTiem,localUrl,isLoaded} = useSelector((state)=>state.reservation)
   async function getTimes() {
-   const res =  await fetch(`https://myapi-5b0f.onrender.com/dates/${dateCurrent}`,{ referrer:'unsafe-url'})
+   const res =  await fetch(`${localUrl}/dates/${dateCurrent}`,{ referrer:'unsafe-url'})
       .then(response => response.json())
-      .then(data =>  dispatch(setArrayInDay(Object.values(data))))
+      .then(data => {
+     dispatch(setArrayInDay(Object.values(data)))
+      dispatch(setIsLoaded(true))
+      console.log('loaded')
+    } 
+    )
       .catch(error => console.error(error))
   }
   useEffect(() => {
     getTimes();
-  }, [dateCurrent,arrayInDayValue]);
+  }, [dateCurrent]);
 
 const handleTicket = (item)=> {
   if(item.countsFreeTickets==0) {
@@ -24,7 +29,6 @@ const handleTicket = (item)=> {
    else {
     dispatch(setValueDateReservation(item.dateReservation))
     dispatch(setIsActiveTicketTiem(item.id))
-    console.log(isActiveTicketTiem)
     getTimes();
    }
 } 
@@ -43,7 +47,9 @@ const handleTicket = (item)=> {
       <div className='App_modal_bottom'>
 
        <div className='App_Modal_TimeBlocks'>
+   
    {
+    isLoaded &&
     arrayInDayValue.map((item,key)=>(
       item.countsFreeTickets!=0 &&
       <div  key={key} style={{border:isActiveTicketTiem==item.id?'3px solid #fbfbfb':'3px solid #fbfbfb00'}}  onClick={()=>handleTicket(item)}>
@@ -51,9 +57,15 @@ const handleTicket = (item)=> {
       <span className='App_modal_tickets'>{item.countsFreeTickets}</span>
     </div>
     ))
-   }
-       </div>
+    
+    }
 
+
+
+       </div>
+       {!isLoaded &&
+ <div className='App_loading'><span class="loader"></span></div>
+}   
       </div>
     </div>
   </div>
