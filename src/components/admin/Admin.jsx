@@ -5,10 +5,10 @@ import { setArrayTickets } from '../../features/reservation/reservationSlice';
 export default function Admin() {
   
     const dispatch = useDispatch()
-    const {arrayTickets} = useSelector((state)=>state.reservation)
+    const {arrayTickets,localUrl} = useSelector((state)=>state.reservation)
 
     async function getPostsForAdmin() {
-        const res = await fetch('http://localhost:3001/tickets',{ referrer:'unsafe-url'})
+        const res = await fetch(`${localUrl}/tickets`,{ referrer:'unsafe-url'})
           .then(response => response.json())
           .then(data =>  dispatch(setArrayTickets(Object.values(data))))
           .catch(error => console.error(error))

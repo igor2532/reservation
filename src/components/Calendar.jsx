@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {setArrayValue, setCountTickets, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsLoadedDays, setIsModal, setIsValideForm, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
+import {setArrayValue, setCountTickets, setCurrentMonth, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsLoadedDays, setIsModal, setIsValideForm, setMonthValue, setNumberMonth, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
 import Modal from '../components/Modal.jsx'
 
 
 export default function Calendar() {
     const dispatch = useDispatch()
-    const {arrayValue,monthValue,isModal,dateCurrent,localUrl,isLoadedDays} = useSelector((state)=>state.reservation)
+    const {arrayValue,monthValue,isModal,dateCurrent,localUrl,isLoadedDays,monthsArray,currentMont,numberMonth} = useSelector((state)=>state.reservation)
      
      async function getPosts() {
-      const res = await fetch(`${localUrl}/`,{ referrer:'unsafe-url'})
+      const res = await fetch(`${localUrl}/api/${currentMont}`,{ referrer:'unsafe-url'})
         .then(response => response.json())
         .then(data =>{
           dispatch(setArrayValue(Object.values(data)))
           dispatch(setIsLoadedDays(true))
-         }).catch(error => console.error(error)) 
+         }).catch(error => {
+          console.error(error)
+          dispatch(setIsLoadedDays(false))
+         }) 
     }
     
     useEffect(() => {
       getPosts();
     
-    }, [arrayValue,monthValue]);
+    }, [monthValue]);
     
     const getWeekDay = (week) => {
       switch (parseInt(week)) {
@@ -61,6 +64,33 @@ export default function Calendar() {
       }
     }
     
+    const nextMonth = () => {
+      dispatch(setIsLoadedDays(false))
+      dispatch(setNumberMonth(numberMonth+1))
+    
+   const newArr = monthsArray.filter((item,key)=>item.month==numberMonth+1)
+    newArr.map((item,key)=>{
+      dispatch(setMonthValue(item.text))
+      dispatch(setCurrentMonth(item.title))
+    })
+  
+   }
+
+   const previousMonth = () => {
+
+    dispatch(setIsLoadedDays(false))
+    dispatch(setNumberMonth(numberMonth-1))
+  
+ const newArr = monthsArray.filter((item,key)=>item.month==numberMonth-1)
+  newArr.map((item,key)=>{
+    dispatch(setMonthValue(item.text))
+    dispatch(setCurrentMonth(item.title))
+   })
+
+ }
+
+
+
   return (
     <>
 
@@ -71,15 +101,22 @@ export default function Calendar() {
 
 <div onClick={()=>isModal?dispatch(setIsModal(false)):''} className="App" style={{filter:isModal?'blur(4px)':'unset'}}>
      <div className='App_top'>
-     <div className='App_update'><button onClick={
+     <div className='App_update'>
+     <button onClick={previousMonth}>Предыдущий месяц месяц</button>
+      <button onClick={
       ()=>{
         dispatch(setIsLoadedDays(false))
         getPosts()
       }
-     }>Обновить календарь</button></div>
-    <h1>{monthValue}</h1>
+     }>Обновить календарь</button><button onClick={nextMonth}>Следующий месяц</button></div>
+    
+    <h1>  {monthValue}   </h1>
 </div>
+{arrayValue.length ==0 && 
+        <div className='App_calendat_empty'>Нет результата</div>
+        }
       <div  className='App_calendar_month'>
+       
     {arrayValue.length>0 &&
     arrayValue.map( (item,key) => (
       <div key={key} style={{background:item.countsFreeTickets==0 || item.isCloseReserv==1?'#f8c3c3':'#cdf1cd',borderColor:item.countsFreeTickets==0?'white':'#005d58'}}>
@@ -109,6 +146,7 @@ export default function Calendar() {
 
      {!isLoadedDays &&
  <div className='App_loading'><span class="loader blackSpinner"></span></div>
+
 }   
      { isModal &&
       <Modal />

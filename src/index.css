@@ -24,10 +24,19 @@ padding-bottom: 30px;
   width: 219px;
   background: white;
   border-radius: 16px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: bold;
 }
-
+.App_calendat_empty {
+  text-align: center;
+  font-size: 24px;
+}
+.App_update {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
 .loader {
   width: 48px;
   height: 48px;
