@@ -7,7 +7,7 @@ export default function ModalForm() {
    const {valueEmail, valueName, valuePhone, countTickets,valueDateReservation,isActiveTicketTiem,isModal,isValideForm} = useSelector((state)=> state.reservation)
     const sendQuery = () => {
      
-        fetch(`http://localhost:3001/insert`, {
+        fetch(`https://myapi-5b0f.onrender.com/insert`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

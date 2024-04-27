@@ -9,7 +9,7 @@ export default function Calendar() {
     const {arrayValue,monthValue,isModal,dateCurrent} = useSelector((state)=>state.reservation)
      
      async function getPosts() {
-      const res = await fetch('http://localhost:3001/',{ referrer:'unsafe-url'})
+      const res = await fetch('https://myapi-5b0f.onrender.com/',{ referrer:'unsafe-url'})
         .then(response => response.json())
         .then(data =>  dispatch(setArrayValue(Object.values(data))))
         .catch(error => console.error(error)) 
