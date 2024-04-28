@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setCountTickets, setIsActiveTicketTiem, setIsModal, setIsValideForm, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
+import { setCountTickets, setIsActiveTicketTiem, setIsLoadedDays, setIsModal, setIsValideForm, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
 
 export default function ModalForm() {
    const dispatch = useDispatch()
@@ -13,9 +13,36 @@ export default function ModalForm() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({valueEmail, valueName, valuePhone, countTickets,valueDateReservation}),
+  }).then((response)=> response.json()).then((response)=>{
+    
+    if(response.title == 'ok') 
+  {
+    dispatch(setIsModal(false))
+    dispatch(setIsLoadedDays(false))
+
+ 
+     fetch(`${localUrl}/lasttransactions`,{ referrer:'unsafe-url'})
+          .then(response => response.json())
+          .then(data => console.log(data) )
+          .catch(error => console.error(error))
+        
+     
+
+
+
+
+  }
+
+
+
   })
-     dispatch(setIsModal(false))
+  //состояние меняет до того как запрос обработается и поэтому нет изменений в админке
     }
+
+
+
+
+    
     useEffect(()=>{
         if(valueEmail != '' && valueName != '' &&  valuePhone != '' && isActiveTicketTiem !== 0 ){
           dispatch(setIsValideForm(true))

@@ -1,29 +1,50 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {setArrayValue, setCountTickets, setCurrentMonth, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsLoadedDays, setIsModal, setIsValideForm, setMonthValue, setNumberMonth, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
+import {setArrayValue, setCountTickets, setCurrentMonth, setDateCurrent, setDateData, setIsActiveTicketTiem, setIsLoaded, setIsLoadedDays, setIsModal, setIsValideForm, setMonthValue, setNumberMonth, setValueEmail, setValueName, setValuePhone } from '../features/reservation/reservationSlice';
 import Modal from '../components/Modal.jsx'
 
 
 export default function Calendar() {
     const dispatch = useDispatch()
-    const {arrayValue,monthValue,isModal,dateCurrent,localUrl,isLoadedDays,monthsArray,currentMont,numberMonth} = useSelector((state)=>state.reservation)
-     
-     async function getPosts() {
+    const {arrayValue,monthValue,isModal,dateCurrent,localUrl,isLoadedDays,monthsArray,currentMont,numberMonth,changeAdminArrayTickets} = useSelector((state)=>state.reservation)
+     const [dateValue,setDate ] = useState();
+     async function getPosts(isSilent) {
       const res = await fetch(`${localUrl}/api/${currentMont}`,{ referrer:'unsafe-url'})
         .then(response => response.json())
         .then(data =>{
-          dispatch(setArrayValue(Object.values(data)))
-          dispatch(setIsLoadedDays(true))
-         }).catch(error => {
+       
+         
+       
+   
+    if(data.length>=0 && isLoadedDays) {
+      dispatch(setArrayValue(Object.values(data)))
+      dispatch(setIsLoadedDays(true))
+    } 
+   
+     
+        }).catch(error => {
           console.error(error)
-          dispatch(setIsLoadedDays(false))
+         dispatch(setIsLoadedDays(false))
          }) 
     }
-    
+
+
+
+ 
     useEffect(() => {
-      getPosts();
-    
-    }, [monthValue]);
+      getPosts(false);
+
+
+      setInterval(()=>{
+        getPosts(true);
+        
+      },9000)
+   
+
+
+
+    console.log(changeAdminArrayTickets)
+    }, [isModal,changeAdminArrayTickets,isLoadedDays]);
     
     const getWeekDay = (week) => {
       switch (parseInt(week)) {

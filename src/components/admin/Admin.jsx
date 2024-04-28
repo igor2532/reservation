@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setArrayTickets } from '../../features/reservation/reservationSlice';
+import { setArrayTickets, setChangeAdminArrayTickets, setIsLoadedDays, setIsModal } from '../../features/reservation/reservationSlice';
 
 export default function Admin() {
   
     const dispatch = useDispatch()
-    const {arrayTickets,localUrl} = useSelector((state)=>state.reservation)
+    const {arrayTickets,localUrl,changeAdminArrayTickets,isModal} = useSelector((state)=>state.reservation)
 
     async function getPostsForAdmin() {
-        const res = await fetch(`${localUrl}/tickets`,{ referrer:'unsafe-url'})
+      await fetch(`${localUrl}/tickets`,{ referrer:'unsafe-url'})
           .then(response => response.json())
           .then(data =>  dispatch(setArrayTickets(Object.values(data))))
           .catch(error => console.error(error))
@@ -16,11 +16,11 @@ export default function Admin() {
       }
       useEffect(() => {
         getPostsForAdmin();
-      }, [arrayTickets]);
+      }, [changeAdminArrayTickets,isModal]);
 
       const deleteTicket = (item) => {
-
-        fetch(`http://localhost:3001/deleteTicket`, {
+     
+      fetch(`${localUrl}/deleteTicket`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -28,8 +28,18 @@ export default function Admin() {
           },
           body: JSON.stringify({idTicket : item.id}),
         })
-      
-      
+        .then(response => response.json())
+        .then((response)=> 
+        {
+          console.log(response)
+         if(response.title == 'ok') {
+          getPostsForAdmin()
+          dispatch(setIsLoadedDays(false))
+         }
+       
+        })
+        
+        
       }
       
 
