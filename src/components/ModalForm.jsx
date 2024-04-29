@@ -6,6 +6,7 @@ export default function ModalForm() {
    const dispatch = useDispatch()
    const {valueEmail, valueName, valuePhone, countTickets,valueDateReservation,isActiveTicketTiem,isModal,isValideForm,localUrl} = useSelector((state)=> state.reservation)
     const sendQuery = () => {
+      dispatch(setIsModal(false))
         fetch(`${localUrl}/insert`, {
     method: 'POST',
     headers: {
@@ -17,24 +18,13 @@ export default function ModalForm() {
     
     if(response.title == 'ok') 
   {
-    dispatch(setIsModal(false))
+   
     dispatch(setIsLoadedDays(false))
-
- 
      fetch(`${localUrl}/lasttransactions`,{ referrer:'unsafe-url'})
           .then(response => response.json())
           .then(data => console.log(data) )
           .catch(error => console.error(error))
-        
-     
-
-
-
-
   }
-
-
-
   })
   //состояние меняет до того как запрос обработается и поэтому нет изменений в админке
     }
@@ -65,9 +55,9 @@ export default function ModalForm() {
         <input  onChange={(e)=>dispatch(setValuePhone(e.target.value))} placeholder='Телефон' /> 
         <label>Кол-во билетов:</label>
          <select  onChange={(e)=>dispatch(setCountTickets(e.target.value))}>
-            <option selected value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
+            <option selected defaultValue='1'>1</option>
+            <option defaultValue='2'>2</option>
+            <option defaultValue='3'>3</option>
             </select>
         
     </div>

@@ -20,7 +20,7 @@ export const reservationSlice = createSlice({
     value: 0,
     sumResult:0,
     arrayValue: '',
-    
+    changeArr: false,
     isModal: false,
     arrayInDayValue: [],
     dateCurrent: '',
@@ -98,6 +98,9 @@ export const reservationSlice = createSlice({
       setChangeAdminArrayTickets: (state,action) =>{
         state.changeAdminArrayTickets = action.payload
       },
+      setChangeArr: (state,action)=> {
+        state.changeArr = action.payload
+      }
   
   
   }
@@ -106,6 +109,6 @@ export const reservationSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent,setValueName,
 setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem ,setArrayTickets,setIsValideForm,setIsLoaded,
-setIsLoadedDays,setCurrentMonth,setNumberMonth,setMonthValue,setChangeAdminArrayTickets} = reservationSlice.actions
+setIsLoadedDays,setCurrentMonth,setNumberMonth,setMonthValue,setChangeAdminArrayTickets,setChangeArr} = reservationSlice.actions
 
 export default reservationSlice.reducer
