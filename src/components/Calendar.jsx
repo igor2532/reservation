@@ -131,6 +131,8 @@ export default function Calendar() {
     });
   };
 
+
+
   return (
     <>
       {isLoadedDays && (
@@ -159,9 +161,19 @@ export default function Calendar() {
             <div className="App_calendat_empty">Нет результата</div>
           )}
           <div className="App_calendar_month">
+          <div>{currentMont}</div>  
+
+     {
+     
+
+     }
+            
             {arrayValue.length > 0 &&
               arrayValue.map((item, key) => (
-                <div
+                
+
+               
+                 <div
                   key={key}
                   style={{
                     background:
@@ -172,12 +184,16 @@ export default function Calendar() {
                       item.countsFreeTickets == 0 ? "white" : "#005d58",
                   }}
                 >
+
+                
+                 
                   <div
                     style={{ color: getStyleWeek(item.week) }}
                     className="App_calendar_dayOf"
                   >
                     {getWeekDay(item.week)}
                   </div>
+
                   <div className="App_calendar_day">{parseInt(item.day)}</div>
                   <div className="App_calendar_button">
                     <button
@@ -207,6 +223,8 @@ export default function Calendar() {
                     </button>
                   </div>
                 </div>
+
+                
               ))}
           </div>
         </div>
