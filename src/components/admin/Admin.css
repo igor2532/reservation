@@ -1,0 +1,93 @@
+div#root {
+    
+}
+.App_admin_item_fixed {
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  background: #00000099;
+  margin: 4px;
+}
+.App_admin_item_fixed div {
+  text-align: left;
+  margin-left: 6px;
+}
+.App_admin_item_fixed div span {
+  font-weight: bold;
+  margin-right: 4px;
+}
+.App_array_items {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  max-width: 1196px;
+  margin: 0 auto;
+}
+.App_admin_item_fixed {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.App_admin_dashboard_item.header div {
+    background: #2da818;
+}
+.App_admin_dashboard_item {
+    display: grid;
+    grid-template-columns: 17% 20% 10% 12% 12%  80px 75px;
+
+    justify-content: center;
+  }
+  .App_admin_dashboard_item>div {
+    border: solid 1px white;
+    color: white;
+    padding: 5px;
+  }
+  .App_admin_dashboard_item button {
+    background: none;
+    color: white;
+    border: solid 1px white;
+  }
+
+  .App_admin_panel {
+    padding-top: 100px;
+    color: white;
+}
+.App_admin_add_fix {
+ 
+}
+
+.App_admin_add_fix div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  max-width: 544px;
+  margin: 0 auto;
+}
+.AppFixTicketsAdd {
+  padding-top: 30px;
+}
+.AppFixTicketsAdd button {
+  background: none;
+  color: white;
+  border: solid 1px white;
+  font-size: 21px;
+  width: 254px;
+  height: 41px;
+}
+.App_admin_add_fix {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.App_admin_add_fix_select {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.App_admin_add_fix_select select {
+  margin-left: 16px;
+}
+.App_admin_add_fix_select select {
+  width: 63px;
+  margin-left: 18px;
+}

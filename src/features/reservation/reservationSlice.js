@@ -10,9 +10,9 @@ export const reservationSlice = createSlice({
     {month:5,title:'05-2024',text:'Май'},{month:6,title:'06-2024',text:'Июнь'}
     ,{month:7,title:'07-2024',text:'Июль'},{month:8,title:'08-2024',text:'Август'},{month:9,title:'09-2024',text:'Сентябрь'},{month:10,title:'10-2024',text:'Октябрь'},
     {month:11,title:'11-2024',text:'Ноябрь'},{month:12,title:'12-2024',text:'Декабрь'}],
-    currentMont: '04-2024',
-    monthValue: 'Апрель',
-    numberMonth:4,
+    currentMont: '08-2024',
+    monthValue: 'Август',
+    numberMonth:8,
     isLoaded:false,
     isLoadedDays: false,
     // localUrl: 'https://myapi-5b0f.onrender.com',
@@ -29,6 +29,8 @@ export const reservationSlice = createSlice({
     valuePhone: '',
     valueEmail: '',
     countTickets: 1,
+    valueDate:'',
+    dateTimeValue:new Date(),
     isActiveTicketTiem: 0,
     //for insert
     
@@ -37,6 +39,7 @@ export const reservationSlice = createSlice({
      arrayTickets : [],
      isValideForm: false,
      changeAdminArrayTickets: '',
+     arrayTicketsFixedAdmin: [],
   },
   reducers: {
    
@@ -92,6 +95,9 @@ export const reservationSlice = createSlice({
       setNumberMonth: (state,action) =>{
         state.numberMonth = action.payload;
       },
+      setValueDate: (state,action) => {
+      state.valueDate = action.payload;
+      },
       setMonthValue : (state,action) => {
         state.monthValue = action.payload
       },
@@ -101,7 +107,14 @@ export const reservationSlice = createSlice({
       setChangeArr: (state,action)=> {
         state.changeArr = action.payload
       }
-  
+      ,
+      setDateTimeValue: (state,action) => {
+        state.dateTimeValue = action.payload
+      },
+      //for admin
+      setArrayTicketsFixedAdmin: (state, action) => {
+        state.arrayTicketsFixedAdmin = action.payload
+      }
   
   }
 })
@@ -109,6 +122,7 @@ export const reservationSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {changeSumResult,setArrayValue,setIsModal,setArrayInDay,setDateCurrent,setValueName,
 setValueEmail,setValuePhone,setCountTickets,setValueDateReservation,setIsActiveTicketTiem ,setArrayTickets,setIsValideForm,setIsLoaded,
-setIsLoadedDays,setCurrentMonth,setNumberMonth,setMonthValue,setChangeAdminArrayTickets,setChangeArr} = reservationSlice.actions
+setIsLoadedDays,setCurrentMonth,setNumberMonth,setMonthValue,setChangeAdminArrayTickets,setChangeArr,setValueDate,setDateTimeValue,
+setArrayTicketsFixedAdmin} = reservationSlice.actions
 
 export default reservationSlice.reducer

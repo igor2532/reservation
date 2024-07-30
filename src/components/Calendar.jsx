@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import {
   setArrayValue,
   setChangeArr,
@@ -19,8 +19,12 @@ import {
   setValuePhone,
 } from "../features/reservation/reservationSlice";
 import Modal from "../components/Modal.jsx";
+import { NavLink } from "react-router-dom";
+import rabbit from "../rabbit.png";
+import kakao from "../kakao.png";
 
 export default function Calendar() {
+  const [valueRabbit, setValueRabbit] = useState(0);
   const dispatch = useDispatch();
   const {
     arrayValue,
@@ -33,10 +37,10 @@ export default function Calendar() {
     currentMont,
     numberMonth,
     changeAdminArrayTickets,
-    changeArr
+    changeArr,
   } = useSelector((state) => state.reservation);
   const [dateValue, setDate] = useState();
-    async function getPosts() {
+  async function getPosts() {
     await fetch(`${localUrl}/api/${currentMont}`, { referrer: "unsafe-url" })
       .then((response) => response.json())
       .then((data) => Object.values(data))
@@ -57,16 +61,14 @@ export default function Calendar() {
       }, time);
     });
   };
-  
-  useEffect(() => {
-   console.log(dateValue)
 
-       promise(100).then((resolve) => {
-         getPosts();
-       });
-  
- 
-  }, [isModal,currentMont,changeAdminArrayTickets, isLoadedDays]);
+  useEffect(() => {
+    console.log(dateValue);
+
+    promise(100).then((resolve) => {
+      getPosts();
+    });
+  }, [isModal, currentMont, changeAdminArrayTickets, isLoadedDays]);
 
   const getWeekDay = (week) => {
     switch (parseInt(week)) {
@@ -131,10 +133,19 @@ export default function Calendar() {
     });
   };
 
+  const cycleEmpty = (week) => {
+     let arrayCountsDaysEmpty = [];
+    for (let index = 0; index < week; index++) {
+      arrayCountsDaysEmpty[index]= index;
+    }
 
+    return arrayCountsDaysEmpty;
+   
+  }
 
   return (
     <>
+    
       {isLoadedDays && (
         <div
           onClick={() => (isModal ? dispatch(setIsModal(false)) : "")}
@@ -142,18 +153,26 @@ export default function Calendar() {
           style={{ filter: isModal ? "blur(4px)" : "unset" }}
         >
           <div className="App_top">
+            <h1>Онлайн бронирование билетов на экскурсию </h1>
             <div className="App_update">
-              <button onClick={previousMonth}>Предыдущий месяц месяц</button>
+              <button onClick={previousMonth}>←</button>
               <button
                 onClick={() => {
                   dispatch(setIsLoadedDays(false));
                   getPosts();
                 }}
               >
-                Обновить календарь
+                ↻
               </button>
-              <button onClick={nextMonth}>Следующий месяц</button>
+              <button onClick={nextMonth}>→
+              </button>
             </div>
+            <div className="App_block_main_rabbit">
+               <div className="App_block_rabbit">
+               <img onClick={()=>{setValueRabbit(valueRabbit>300?0:valueRabbit+70)}} style={{ left: `${valueRabbit>300?0:valueRabbit}px` }}  className="App_kakao_img" src={kakao} />
+               </div>
+            </div>
+
 
             <h1> {monthValue} </h1>
           </div>
@@ -161,38 +180,48 @@ export default function Calendar() {
             <div className="App_calendat_empty">Нет результата</div>
           )}
           <div className="App_calendar_month">
-          <div>{currentMont}</div>  
+          <div className="App_calendar_month_day_week">ПН</div>
+          <div className="App_calendar_month_day_week">ВТ</div>
+          <div className="App_calendar_month_day_week">СР</div>
+          <div className="App_calendar_month_day_week">ЧТ</div>
+          <div className="App_calendar_month_day_week">ПТ</div>
+          <div className="App_calendar_month_day_week holiday">СБ</div>
+          <div className="App_calendar_month_day_week holiday">ВС</div>
+        
 
-     {
-     
+          
 
-     }
-            
             {arrayValue.length > 0 &&
               arrayValue.map((item, key) => (
-                
+             
+           <>
 
-               
-                 <div
+
+      {item.day == '01' && item.week != 0 && 
+                 <>
+                   {cycleEmpty(item.week-1).map((item,key)=>(
+                    <>
+                    <div className="App_calendar_month_day_empty"></div>
+                    </>
+                   ))} 
+                                
+                    </>
+               }
+
+                <div
                   key={key}
                   style={{
                     background:
                       item.countsFreeTickets == 0 || item.isCloseReserv == 1
-                        ? "#f8c3c3"
-                        : "#cdf1cd",
+                        ? "#fd090940"
+                        : "#cdf1cd9e",
                     borderColor:
                       item.countsFreeTickets == 0 ? "white" : "#005d58",
                   }}
-                >
-
-                
-                 
-                  <div
-                    style={{ color: getStyleWeek(item.week) }}
-                    className="App_calendar_dayOf"
-                  >
-                    {getWeekDay(item.week)}
-                  </div>
+                > 
+               
+                  
+           
 
                   <div className="App_calendar_day">{parseInt(item.day)}</div>
                   <div className="App_calendar_button">
@@ -219,13 +248,13 @@ export default function Calendar() {
                             : "",
                       }}
                     >
-                      ({item.countsFreeTickets})
+                      {item.countsFreeTickets}
                     </button>
                   </div>
                 </div>
-
-                
-              ))}
+             
+                </>
+             ))}
           </div>
         </div>
       )}
@@ -236,6 +265,8 @@ export default function Calendar() {
         </div>
       )}
       {isModal && <Modal />}
+   
     </>
+ 
   );
 }

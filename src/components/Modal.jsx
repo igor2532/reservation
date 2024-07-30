@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setArrayInDay, setDateCurrent, setIsActiveTicketTiem, setIsLoaded, setIsModal, setValueDateReservation } from '../features/reservation/reservationSlice';
 import ModalForm from './ModalForm';
-
+import rabbitResize from "../rabbitresize.png";
 export default function Modal() {
 
 const dispatch = useDispatch()
@@ -52,7 +52,7 @@ const handleTicket = (item)=> {
     isLoaded &&
     arrayInDayValue.map((item,key)=>(
       item.countsFreeTickets!=0 &&
-      <div  key={key} style={{border:isActiveTicketTiem==item.id?'3px solid #fbfbfb':'3px solid #fbfbfb00'}}  onClick={()=>handleTicket(item)}>
+      <div  key={key} style={{border:isActiveTicketTiem==item.id?'1px solid #f7a828':'1px solid white'}}  onClick={()=>handleTicket(item)}>
       <span className='App_modal_time'>{item.timeV} </span>
       <span className='App_modal_tickets'>{item.countsFreeTickets}</span>
     </div>
@@ -67,7 +67,9 @@ const handleTicket = (item)=> {
  <div className='App_loading'><span class="loader"></span></div>
 }   
       </div>
+      <img src={rabbitResize} className='App_rabbit_resize' />
     </div>
+    
   </div>
   </>
   )
